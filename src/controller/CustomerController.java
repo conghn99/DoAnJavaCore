@@ -15,7 +15,6 @@ public class CustomerController implements CRUDaction {
         this.customerList = customerList;
     }
 
-
     public void addCustomer(){
         customerList.add(new Customer(1,"Huong","20/5/1970","Ha Noi","0972645112"));
     }
@@ -48,11 +47,11 @@ public class CustomerController implements CRUDaction {
             boolean istrue = true;
             while(istrue) {
                 if (customer.getPhone().equals(phoneNumber)) {
-                    System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                    System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
                     phoneNumber = scanner.nextLine();
                     for (Customer customers : customerList) {
                         if (customers.getPhone().equals(phoneNumber)) {
-                            System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                            System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
                             phoneNumber = scanner.nextLine();
                         } else {
                             istrue = false;
@@ -69,6 +68,42 @@ public class CustomerController implements CRUDaction {
 
     @Override
     public boolean update() {
+        System.out.println("Nhập id khách hàng muốn sửa");
+        int customerId = new Scanner(System.in).nextInt();
+        for (Customer customer : customerList) {
+            if (customer.getID() == customerId) {
+                System.out.println("Nhập vào ngày sinh mới:");
+                String newBirthday = scanner.nextLine();
+                System.out.println("Nhập vào địa chỉ mới:");
+                String newAddress = scanner.nextLine();
+                System.out.println("Nhập vào số điện thoại mới:");
+                String newPhoneNumber = scanner.nextLine();
+                for (Customer customers1 : customerList) {
+                    boolean istrue = true;
+                    while(istrue) {
+                        if (customers1.getPhone().equals(newPhoneNumber)) {
+                            System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
+                            newPhoneNumber = scanner.nextLine();
+                            for (Customer customers2 : customerList) {
+                                if (customers2.getPhone().equals(newPhoneNumber)) {
+                                    System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
+                                    newPhoneNumber = scanner.nextLine();
+                                } else {
+                                    istrue = false;
+                                }
+                            } 
+                        }
+                        else {
+                            istrue = false;
+                        }
+                    }
+                }
+                customer.setBirthDay(newBirthday);
+                customer.setAddress(newAddress);
+                customer.setPhone(newPhoneNumber);
+                return true;
+            }
+        }
         return false;
     }
 

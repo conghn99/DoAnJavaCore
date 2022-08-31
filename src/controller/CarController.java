@@ -4,6 +4,7 @@ import action.CRUDaction;
 import model.Car;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
@@ -130,7 +131,12 @@ public class CarController implements CRUDaction {
     }
 
     public void sortCarByPriceDescending(){
-        carArrayList.sort((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
+        Collections.sort(carArrayList, new Comparator<Car>() {
+            @Override
+            public int compare(Car o1, Car o2) {
+                return o2.getPrice() - o1.getPrice() > 0 ? 1 : -1;
+            }
+        });
         System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
             System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
@@ -138,7 +144,12 @@ public class CarController implements CRUDaction {
     }
 
     public void sortCarByPriceAscending(){
-        carArrayList.sort(Comparator.comparingDouble(Car::getPrice));
+        Collections.sort(carArrayList, new Comparator<Car>() {
+            @Override
+            public int compare(Car o1, Car o2) {
+                return o1.getPrice() - o2.getPrice() > 0 ? 1 : -1;
+            }
+        });
         System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
             System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
@@ -146,7 +157,12 @@ public class CarController implements CRUDaction {
     }
 
     public void sortCarByName(){
-        carArrayList.sort(Comparator.comparing(Car::getCarName));
+        Collections.sort(carArrayList, new Comparator<Car>() {
+            @Override
+            public int compare(Car o1, Car o2) {
+                return o1.getCarName().compareTo(o2.getCarName());
+            }
+        });
         System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
             System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
