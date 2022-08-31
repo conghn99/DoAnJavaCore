@@ -3,7 +3,7 @@ package model;
 public class Order{
     private int oderID;
     private int carID;
-    private int agencyID;
+    private int customerID;
     private int quantity;
     private int day;
     private int month;
@@ -14,10 +14,10 @@ public class Order{
     }
 
 
-    public Order(int oderID, int carID, int agencyID, int quantity, int day, int month, double total, Status status) {
+    public Order(int oderID, int carID, int customerID, int quantity, int day, int month, double total, Status status) {
         this.oderID = oderID;
         this.carID = carID;
-        this.agencyID = agencyID;
+        this.customerID = customerID;
         this.quantity = quantity;
         this.day = day;
         this.month = month;
@@ -68,12 +68,12 @@ public class Order{
         this.carID = carID;
     }
 
-    public int getAgencyID() {
-        return agencyID;
+    public int getCustomerID() {
+        return customerID;
     }
 
-    public void setAgencyID(int agencyID) {
-        this.agencyID = agencyID;
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 
     public int getQuantity() {
@@ -97,7 +97,7 @@ public class Order{
         return "Order{" +
                 "oderID=" + oderID +
                 ", carID=" + carID +
-                ", agencyID=" + agencyID +
+                ", agencyID=" + customerID +
                 ", quantity=" + quantity +
                 ", day=" + day +
                 ", month=" + month +

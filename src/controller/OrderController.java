@@ -27,7 +27,7 @@ public class OrderController {
         System.out.printf("%s%20s%20s%20s%20s%20s%20s%n","ID","Car Name","Customer Name","Quantity","Total","Status","Date");
         for (Order order : oderlist) {
             String date = order.getDay() + " / " + order.getMonth() + " / " + "2022";
-            System.out.printf("%d%20s%20s%20d%20s%20s%20s%n", order.getOderID(), check.carName(arrayList,order.getCarID()), check.customerName(customerList,order.getAgencyID()), order.getQuantity(), check.withLargeIntegers(order.getTotal()),order.getStatus(),date);
+            System.out.printf("%d%20s%20s%20d%20s%20s%20s%n", order.getOderID(), check.carName(arrayList,order.getCarID()), check.customerName(customerList,order.getCustomerID()), order.getQuantity(), check.withLargeIntegers(order.getTotal()),order.getStatus(),date);
             if (order.getStatus() == Status.ORDER) {
                 estimateRevenue += order.getTotal();
             } else if (order.getStatus() == Status.PAID) {
@@ -51,14 +51,14 @@ public class OrderController {
         }
         carController.displayCar();
         System.out.println("Mời nhập id sản phẩm muốn thêm:");
-        String stringcarID = scanner.nextLine();
+        String stringcarID = new Scanner(System.in).nextLine();
         int carID = check.carid(stringcarID,arrayList);
         customerController.display();
         System.out.println("Mời nhập id khách hàng:");
-        String stringagencyID = scanner.nextLine();
+        String stringagencyID = new Scanner(System.in).nextLine();
         int agencyID = check.customerid(stringagencyID,customerList);
         System.out.println("Mời nhập số lượng");
-        String quantity = scanner.nextLine();
+        String quantity = new Scanner(System.in).nextLine();
         int quantityInt = check.quantityCheck(quantity,carID,arrayList);
         System.out.println("Mời nhập ngày đặt hàng ");
         int day = scanner.nextInt();
@@ -78,7 +78,7 @@ public class OrderController {
         oderlist.add(order);
     }
 
-    public boolean updateStatus(){
+    public boolean updateStatus(ArrayList<Car> arrayList){
         System.out.println("Nhập vào id đơn hàng");
         int id = scanner.nextInt();
         for (Order order : oderlist){
@@ -91,6 +91,11 @@ public class OrderController {
                         break;
                     case 2 :
                         order.setStatus(Order.Status.CANCEL);
+                        for (Car car : arrayList) {
+                            if(car.getCarName().equals(check.carName(arrayList,order.getCarID()))) {
+                                car.setQuantity(car.getQuantity() + order.getQuantity());
+                            }
+                        }
                         break;
                 }
                 return true;
@@ -117,6 +122,7 @@ public class OrderController {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         int check1 = 0;
         double estimateRevenues = 0;
+        double actualRevenues = 0;
         System.out.println("Nhập vào ngày bắt đầu");
         int dayStart = scanner.nextInt();
         System.out.println("Nhập vào tháng bắt đầu");
@@ -130,17 +136,23 @@ public class OrderController {
         try {
             Date dateStart = formatter.parse(start);
             Date dateEnd = formatter.parse(end);
-            System.out.printf("%s%20s%20s%20s%20s%20s%20s%n","ID","Car Name","Agency Name","Quantity","Total","Status","Date");
+            System.out.printf("%s%20s%20s%20s%20s%20s%20s%n","ID","Car Name","Customer Name","Quantity","Total","Status","Date");
             for (Date date : listDate){
                 if (dateStart.before(date) && dateEnd.after(date)){
                     String dateString = oderlist.get(check1).getDay() + " / " + oderlist.get(check1).getMonth() + " / 2022";
-                    System.out.printf("%d%20s%20s%20d%20s%20s%20s%n", oderlist.get(check1).getOderID(), check.carName(arrayList,oderlist.get(check1).getCarID()), check.customerName(customerList,oderlist.get(check1).getAgencyID()), oderlist.get(check1).getQuantity(), check.withLargeIntegers(oderlist.get(check1).getTotal()),oderlist.get(check1).getStatus(),dateString);
-                    estimateRevenues += oderlist.get(check1).getTotal();
+                    System.out.printf("%d%20s%20s%20d%20s%20s%20s%n", oderlist.get(check1).getOderID(), check.carName(arrayList,oderlist.get(check1).getCarID()), check.customerName(customerList,oderlist.get(check1).getCustomerID()), oderlist.get(check1).getQuantity(), check.withLargeIntegers(oderlist.get(check1).getTotal()),oderlist.get(check1).getStatus(),dateString);
+                    if (oderlist.get(check1).getStatus() == Status.ORDER) {
+                        estimateRevenues += oderlist.get(check1).getTotal();
+                    } else if (oderlist.get(check1).getStatus() == Status.PAID) {
+                        actualRevenues += oderlist.get(check1).getTotal();
+                    }
+                    
                 }
                 check1++;
             }
             System.out.println();
             System.out.println("Doanh thu ước tính: " + check.withLargeIntegers(estimateRevenues) + ".");
+            System.out.println("Doanh thu thực tế: " + check.withLargeIntegers(actualRevenues) + ".");
             System.out.println();
         } catch (ParseException e) {
             e.printStackTrace();

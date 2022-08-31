@@ -217,5 +217,4 @@ public class Check {
         }
         return customerName;
     }
-
 }

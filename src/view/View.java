@@ -72,11 +72,12 @@ public class View {
         System.out.println("7 . Sắp xếp theo tên");
         System.out.println("8 . Sắp xếp theo giá tăng dần");
         System.out.println("9 . Sắp xếp theo giá giảm dần");
-        System.out.println("10 . Lên đơn hàng");
-        System.out.println("11 . Danh sách đơn hàng");
-        System.out.println("12 . Sửa trạng thái đơn hàng");
-        System.out.println("13 . Hiển thị đơn hàng trong khoảng thời gian");
-        System.out.println("14 . Đăng xuất");
+        System.out.println("10 . Thêm thông tin khách hàng");
+        System.out.println("11 . Lên đơn hàng");
+        System.out.println("12 . Danh sách đơn hàng");
+        System.out.println("13 . Sửa trạng thái đơn hàng");
+        System.out.println("14 . Hiển thị đơn hàng trong khoảng thời gian");
+        System.out.println("15 . Đăng xuất");
         System.out.println("0 . Thoát");
         System.out.println("Chọn chức năng :");
 
@@ -91,7 +92,6 @@ public class View {
                 carController.display();
                 break;
             case 2 :
-                scanner.nextLine();
                 carController.input();
                 System.out.println("Thêm xe mới thành công");
                 break;
@@ -125,29 +125,32 @@ public class View {
                 carController.sortCarByPriceDescending();
                 break;
             case 10 :
-                orderController.input(carList,customerList);
+                customerController.input();
                 break;
             case 11 :
+                orderController.input(carList,customerList);
+                break;
+            case 12 :
                 if(orderList.size() == 0) {
                     System.out.println("Chưa có đơn hàng nào");
                 } else {
                     orderController.display(carList,customerList);
                 }
                 break;
-            case 12 :
+            case 13 :
                 orderController.display(carList,customerList);
-                if (orderController.updateStatus()){
+                if (orderController.updateStatus(carList)){
                     System.out.println("Cập nhật thành công");
                     orderController.display(carList,customerList);
                 }else {
                     System.out.println("Không tìm thấy id đơn hàng");
                 }
                 break;
-            case 13 :
+            case 14 :
                 orderController.getListTime();
                 orderController.checkTime(carList,customerList);
                 break;
-            case 14 :
+            case 15 :
                 login(carController, orderController, customerList, customerController, orderList);
                 break;
         }

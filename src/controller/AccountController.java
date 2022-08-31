@@ -17,10 +17,10 @@ public class AccountController implements CRUDaction {
     }
 
     public void addAccount(){
+        manages.add(new Account(1,"Dat","13/12/1998","dat","1234", 2));
         manages.add(new Account(1,"Tring Quang Dung","13/12/1996","dung","1234",1));
         manages.add(new Account(2,"Nguyen Viet Long","13/5/2002","long","1234",1));
         manages.add(new Account(3,"Do Thanh Cong","13/11/1999","cong","1234",1));
-        manages.add(new Account(1,"Dat","13/12/1998","dat","1234", 2));
     }
 
     public int checkLogin(){
@@ -40,10 +40,10 @@ public class AccountController implements CRUDaction {
 
     @Override
     public void display() {
-        System.out.printf("%s%20s%20s%20s%20s%20s%n","ID","Name","Age","BirthDay","UserName","Password");
+        System.out.printf("%s%20s%20s%20s%20s%n","ID","Name","BirthDay","UserName","Password");
         for (Account manage : manages) {
             if(manage.getRole() == 1) {
-                System.out.printf("%d%20s%20d%20s%17s%20s%n",manage.getID(),manage.getName(),manage.getBirthDay(),manage.getUserName(),manage.getPassWord());
+                System.out.printf("%d%20s%20s%17s%20s%n",manage.getID(),manage.getName(),manage.getBirthDay(),manage.getUserName(),manage.getPassWord());
             } 
         }
     }
@@ -62,9 +62,38 @@ public class AccountController implements CRUDaction {
         String birthDay = scanner.nextLine();
         System.out.println("Nhập vào tên đăng nhập");
         String userName = scanner.nextLine();
+        for (Account acc : manages) {
+            boolean istrue = true;
+            while(istrue) {
+                if (acc.getUserName().equals(userName)) {
+                    System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                    userName = scanner.nextLine();
+                    for (Account accs : manages) {
+                        if (accs.getUserName().equals(userName)) {
+                            System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                            userName = scanner.nextLine();
+                        } else {
+                            istrue = false;
+                        }
+                    } 
+                }
+                else {
+                    istrue = false;
+                }
+            }
+        }
+        boolean passwordCheck;
         System.out.println("Nhập vào mật khẩu");
-        String passWord = scanner.nextLine();
-        manages.add(new Account(id,name,birthDay,userName,passWord,1));
+        String password = scanner.nextLine();
+        do {
+            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[.,-_;]).{7,15}$";
+            passwordCheck = password.matches(passwordPattern);
+            if (!passwordCheck) {
+                System.out.println("Password ko hợp lệ, xin hãy nhập lại password");
+                password = scanner.nextLine();
+            }
+        } while (!passwordCheck);
+        manages.add(new Account(id,name,birthDay,userName,password,1));
     }
 
     @Override
@@ -74,15 +103,44 @@ public class AccountController implements CRUDaction {
         for (Account manage : manages) {
             if (manage.getID() == idEmployee && manage.getRole() == 1) {
                 System.out.println("Nhập vào ngày sinh nhân viên mới");
-                String birthDay = scanner.nextLine();
                 scanner.nextLine();
+                String birthDay = scanner.nextLine();
                 System.out.println("Nhập vào tên đăng nhập mới");
                 String userName = scanner.nextLine();
+                for (Account acc : manages) {
+                    boolean istrue = true;
+                    while(istrue) {
+                        if (acc.getUserName().equals(userName)) {
+                            System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                            userName = scanner.nextLine();
+                            for (Account accs : manages) {
+                                if (accs.getUserName().equals(userName)) {
+                                    System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                                    userName = scanner.nextLine();
+                                } else {
+                                    istrue = false;
+                                }
+                            } 
+                        }
+                        else {
+                            istrue = false;
+                        }
+                    }
+                }
+                boolean passwordCheck;
                 System.out.println("Nhập vào mật khẩu mới");
-                String passWord = scanner.nextLine();
+                String password = scanner.nextLine();
+                do {
+                    String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[.,-_;]).{7,15}$";
+                    passwordCheck = password.matches(passwordPattern);
+                    if (!passwordCheck) {
+                        System.out.println("Password ko hợp lệ, xin hãy nhập lại password");
+                        password = scanner.nextLine();
+                    }
+                } while (!passwordCheck);
                 manage.setBirthDay(birthDay);
                 manage.setUserName(userName);
-                manage.setPassWord(passWord);
+                manage.setPassWord(password);
                 return true;
             }
         }
@@ -91,8 +149,9 @@ public class AccountController implements CRUDaction {
 
     @Override
     public boolean delete() {
-        System.out.println("Nhập vào id quản lý muốn xoá");
+        System.out.println("Nhập vào id nhân viên muốn xoá");
         int idEmployee = scanner.nextInt();
+        scanner.nextLine();
         for (int i = 0; i < manages.size(); i++){
             if (manages.get(i).getID() == idEmployee && manages.get(i).getRole() == 1){
                 manages.remove(i);
