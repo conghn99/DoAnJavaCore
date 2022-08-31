@@ -44,6 +44,26 @@ public class CustomerController implements CRUDaction {
         String address = scanner.nextLine();
         System.out.println("Nhập vào số điện thoại");
         String phoneNumber = scanner.nextLine();
+        for (Customer customer : customerList) {
+            boolean istrue = true;
+            while(istrue) {
+                if (customer.getPhone().equals(phoneNumber)) {
+                    System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                    phoneNumber = scanner.nextLine();
+                    for (Customer customers : customerList) {
+                        if (customers.getPhone().equals(phoneNumber)) {
+                            System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                            phoneNumber = scanner.nextLine();
+                        } else {
+                            istrue = false;
+                        }
+                    } 
+                }
+                else {
+                    istrue = false;
+                }
+            }
+        }
         customerList.add(new Customer(id,name,birthDay,address,phoneNumber));
     }
 
