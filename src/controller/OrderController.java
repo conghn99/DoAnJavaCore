@@ -82,7 +82,7 @@ public class OrderController {
         System.out.println("Nhập vào id đơn hàng");
         int id = scanner.nextInt();
         for (Order order : oderlist){
-            if (order.getCarID() == id){
+            if (order.getOderID() == id){
                 System.out.println("Chọn trạng thái mới (1. Thanh toán - 2. Huỷ bỏ)");
                 int status = scanner.nextInt();
                 switch (status){
