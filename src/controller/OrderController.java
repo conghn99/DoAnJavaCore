@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class OrderController {
     ArrayList<Order> oderlist;
     ArrayList<Date> listDate;
+    
     Check check = new Check();
     Scanner scanner = new Scanner(System.in);
 
@@ -52,30 +53,73 @@ public class OrderController {
         carController.displayCar();
         System.out.println("Mời nhập id sản phẩm muốn thêm:");
         String stringcarID = new Scanner(System.in).nextLine();
-        int carID = check.carid(stringcarID,arrayList);
-        customerController.display();
-        System.out.println("Mời nhập id khách hàng:");
-        String stringagencyID = new Scanner(System.in).nextLine();
-        int agencyID = check.customerid(stringagencyID,customerList);
-        System.out.println("Mời nhập số lượng");
-        String quantity = new Scanner(System.in).nextLine();
-        int quantityInt = check.quantityCheck(quantity,carID,arrayList);
-        System.out.println("Mời nhập ngày đặt hàng ");
-        int day = scanner.nextInt();
-        System.out.println("Mời nhập tháng đặt hàng ");
-        int month = scanner.nextInt();
-        double total = 0;
-        for (Car car : arrayList) {
-            if (carID != car.getCarID()) continue;
-            total = Integer.parseInt(quantity) * car.getPrice();
-            car.setQuantity(car.getQuantity() - quantityInt);
-            System.out.printf("Xe %s còn lại %d chiếc trong kho", car.getCarName(), car.getQuantity());
-            System.out.println();
-            System.out.println();
-            break;
+        int carID;
+        while(true) {
+            try {
+                carID = check.carid(stringcarID,arrayList);
+                break;
+            } catch (Exception e) {
+                System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
+                stringcarID = scanner.nextLine();
+                continue;
+            }
         }
-        Order order = new Order(oderID,carID,agencyID,quantityInt,day,month,total, Order.Status.ORDER);
-        oderlist.add(order);
+        System.out.println("Chọn hành động");
+        System.out.println("1 . Nhập khách hàng mới");
+        System.out.println("2 . Chọn khách hàng cũ");
+        int a = new Scanner(System.in).nextInt();
+        switch (a) {
+            case 1: {
+                customerController.input();
+                break;
+            }
+            case 2: {
+                customerController.display();
+                System.out.println("Mời nhập id khách hàng:");
+                String stringagencyID = new Scanner(System.in).nextLine();
+                int customerID;
+                while(true) {
+                    try {
+                        customerID = check.customerid(stringagencyID,customerList);
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
+                        stringcarID = scanner.nextLine();
+                        continue;
+                    }
+                }
+                System.out.println("Mời nhập số lượng");
+                String quantity = new Scanner(System.in).nextLine();
+                int quantityInt;
+                while(true) {
+                    try {
+                        quantityInt = check.quantityCheck(quantity,carID,arrayList);
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Số lượng nhập vào phải là kiểu số, xin hãy nhập lại");
+                        stringcarID = scanner.nextLine();
+                        continue;
+                    }
+                }
+                System.out.println("Mời nhập ngày đặt hàng ");
+                int day = scanner.nextInt();
+                System.out.println("Mời nhập tháng đặt hàng ");
+                int month = scanner.nextInt();
+                double total = 0;
+                for (Car car : arrayList) {
+                    if (carID != car.getCarID()) continue;
+                    total = Integer.parseInt(quantity) * car.getPrice();
+                    car.setQuantity(car.getQuantity() - quantityInt);
+                    System.out.printf("Xe %s còn lại %d chiếc trong kho", car.getCarName(), car.getQuantity());
+                    System.out.println();
+                    System.out.println();
+                    break;
+                }
+                Order order = new Order(oderID,carID,customerID,quantityInt,day,month,total, Order.Status.ORDER);
+                oderlist.add(order);
+                break;
+            }
+        }
     }
 
     public boolean updateStatus(ArrayList<Car> arrayList){

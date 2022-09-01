@@ -1,5 +1,6 @@
 package controller;
 
+import model.Account;
 import model.Car;
 import model.Customer;
 
@@ -216,5 +217,42 @@ public class Check {
             }
         }
         return customerName;
+    }
+
+    public String passwordCheck(String password) {
+        boolean passwordCheck;
+        do {
+            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[.,-_;]).{7,15}$";
+            passwordCheck = password.matches(passwordPattern);
+            if (!passwordCheck) {
+                System.out.println("Password ko hợp lệ, xin hãy nhập lại password");
+                password = scanner.nextLine();
+            }
+        } while (!passwordCheck);
+        return password;
+    }
+
+    public String userNameCheck(String userName, ArrayList<Account> manages) {
+        for (Account acc : manages) {
+            boolean istrue = true;
+            while(istrue) {
+                if (acc.getUserName().equals(userName)) {
+                    System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                    userName = scanner.nextLine();
+                    for (Account accs : manages) {
+                        if (accs.getUserName().equals(userName)) {
+                            System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
+                            userName = scanner.nextLine();
+                        } else {
+                            istrue = false;
+                        }
+                    } 
+                }
+                else {
+                    istrue = false;
+                }
+            }
+        }
+        return userName;
     }
 }

@@ -21,9 +21,9 @@ public class CustomerController implements CRUDaction {
 
     @Override
     public void display() {
-        System.out.printf("%s%20s%40s%40s%n","ID","Name","Address","Phone");
+        System.out.printf("%s%20s%40s%40s%40s%n","ID","Name","Birthday","Address","Phone");
         for (Customer customer : customerList) {
-            System.out.printf("%d%20s%40s%45s%n", customer.getID(), customer.getName(),customer.getAddress(),customer.getPhone());
+            System.out.printf("%d%20s%40s%40s%45s%n", customer.getID(), customer.getName(), customer.getBirthDay(),customer.getAddress(),customer.getPhone());
         }
     }
 
@@ -68,6 +68,7 @@ public class CustomerController implements CRUDaction {
 
     @Override
     public boolean update() {
+        display();
         System.out.println("Nhập id khách hàng muốn sửa");
         int customerId = new Scanner(System.in).nextInt();
         for (Customer customer : customerList) {

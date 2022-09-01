@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class AccountController implements CRUDaction {
     Scanner scanner = new Scanner(System.in);
+    Check check = new Check();
 
     ArrayList<Account> manages = new ArrayList<>();
     String userNameInput = null;
@@ -61,38 +62,11 @@ public class AccountController implements CRUDaction {
         System.out.println("Nhập vào ngày sinh nhân viên");
         String birthDay = scanner.nextLine();
         System.out.println("Nhập vào tên đăng nhập");
-        String userName = scanner.nextLine();
-        for (Account acc : manages) {
-            boolean istrue = true;
-            while(istrue) {
-                if (acc.getUserName().equals(userName)) {
-                    System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
-                    userName = scanner.nextLine();
-                    for (Account accs : manages) {
-                        if (accs.getUserName().equals(userName)) {
-                            System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
-                            userName = scanner.nextLine();
-                        } else {
-                            istrue = false;
-                        }
-                    } 
-                }
-                else {
-                    istrue = false;
-                }
-            }
-        }
-        boolean passwordCheck;
+        String stringUserName = scanner.nextLine();
+        String userName = check.userNameCheck(stringUserName, manages);
         System.out.println("Nhập vào mật khẩu");
-        String password = scanner.nextLine();
-        do {
-            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[.,-_;]).{7,15}$";
-            passwordCheck = password.matches(passwordPattern);
-            if (!passwordCheck) {
-                System.out.println("Password ko hợp lệ, xin hãy nhập lại password");
-                password = scanner.nextLine();
-            }
-        } while (!passwordCheck);
+        String stringPassword = scanner.nextLine();
+        String password = check.passwordCheck(stringPassword);
         manages.add(new Account(id,name,birthDay,userName,password,1));
     }
 
@@ -106,38 +80,11 @@ public class AccountController implements CRUDaction {
                 scanner.nextLine();
                 String birthDay = scanner.nextLine();
                 System.out.println("Nhập vào tên đăng nhập mới");
-                String userName = scanner.nextLine();
-                for (Account acc : manages) {
-                    boolean istrue = true;
-                    while(istrue) {
-                        if (acc.getUserName().equals(userName)) {
-                            System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
-                            userName = scanner.nextLine();
-                            for (Account accs : manages) {
-                                if (accs.getUserName().equals(userName)) {
-                                    System.out.println("Username này đã tồn tại, vui lòng nhập username khác");
-                                    userName = scanner.nextLine();
-                                } else {
-                                    istrue = false;
-                                }
-                            } 
-                        }
-                        else {
-                            istrue = false;
-                        }
-                    }
-                }
-                boolean passwordCheck;
+                String stringUserName = scanner.nextLine();
+                String userName = check.userNameCheck(stringUserName, manages);
                 System.out.println("Nhập vào mật khẩu mới");
-                String password = scanner.nextLine();
-                do {
-                    String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[.,-_;]).{7,15}$";
-                    passwordCheck = password.matches(passwordPattern);
-                    if (!passwordCheck) {
-                        System.out.println("Password ko hợp lệ, xin hãy nhập lại password");
-                        password = scanner.nextLine();
-                    }
-                } while (!passwordCheck);
+                String stringPassword = scanner.nextLine();
+                String password = check.passwordCheck(stringPassword);
                 manage.setBirthDay(birthDay);
                 manage.setUserName(userName);
                 manage.setPassWord(password);
