@@ -255,4 +255,29 @@ public class Check {
         }
         return userName;
     }
+
+
+    public String phoneCheck(String phoneNumber, ArrayList<Customer> customerList) {
+        for (Customer customer : customerList) {
+            boolean istrue = true;
+            while(istrue) {
+                if (customer.getPhone().equals(phoneNumber)) {
+                    System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
+                    phoneNumber = scanner.nextLine();
+                    for (Customer customers : customerList) {
+                        if (customers.getPhone().equals(phoneNumber)) {
+                            System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
+                            phoneNumber = scanner.nextLine();
+                        } else {
+                            istrue = false;
+                        }
+                    } 
+                }
+                else {
+                    istrue = false;
+                }
+            }
+        }
+        return phoneNumber;
+    }
 }

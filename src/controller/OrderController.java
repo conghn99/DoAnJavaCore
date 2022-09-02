@@ -50,20 +50,6 @@ public class OrderController {
         }else {
             oderID = oderlist.get(oderlist.size() - 1).getOderID() + 1;
         }
-        carController.displayCar();
-        System.out.println("Mời nhập id sản phẩm muốn thêm:");
-        String stringcarID = new Scanner(System.in).nextLine();
-        int carID;
-        while(true) {
-            try {
-                carID = check.carid(stringcarID,arrayList);
-                break;
-            } catch (Exception e) {
-                System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringcarID = scanner.nextLine();
-                continue;
-            }
-        }
         System.out.println("Chọn hành động");
         System.out.println("1 . Nhập khách hàng mới");
         System.out.println("2 . Chọn khách hàng cũ");
@@ -76,11 +62,25 @@ public class OrderController {
             case 2: {
                 customerController.display();
                 System.out.println("Mời nhập id khách hàng:");
-                String stringagencyID = new Scanner(System.in).nextLine();
+                String stringCustomerID = new Scanner(System.in).nextLine();
                 int customerID;
                 while(true) {
                     try {
-                        customerID = check.customerid(stringagencyID,customerList);
+                        customerID = check.customerid(stringCustomerID,customerList);
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
+                        stringCustomerID = scanner.nextLine();
+                        continue;
+                    }
+                }
+                carController.displayCar();
+                System.out.println("Mời nhập id sản phẩm muốn thêm:");
+                String stringcarID = new Scanner(System.in).nextLine();
+                int carID;
+                while(true) {
+                    try {
+                        carID = check.carid(stringcarID,arrayList);
                         break;
                     } catch (Exception e) {
                         System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
