@@ -72,12 +72,23 @@ public class AccountController implements CRUDaction {
 
     @Override
     public boolean update() {
-        System.out.println("Nhập id nhân viên muốn sửa");
-        int idEmployee = scanner.nextInt();
+        display();
+        System.out.println("Nhập vào ID nhân viên muốn sửa");
+        String stringEmployeeId = new Scanner(System.in).nextLine();
+        int employeeId;
+        while(true) {
+            try {
+                employeeId = check.employeeid(stringEmployeeId, manages);
+                break;
+            } catch (Exception e) {
+                System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
+                stringEmployeeId = scanner.nextLine();
+                continue;
+            }
+        }
         for (Account manage : manages) {
-            if (manage.getID() == idEmployee && manage.getRole() == 1) {
+            if (manage.getID() == employeeId && manage.getRole() == 1) {
                 System.out.println("Nhập vào ngày sinh nhân viên mới");
-                scanner.nextLine();
                 String birthDay = scanner.nextLine();
                 System.out.println("Nhập vào tên đăng nhập mới");
                 String stringUserName = scanner.nextLine();
@@ -88,6 +99,7 @@ public class AccountController implements CRUDaction {
                 manage.setBirthDay(birthDay);
                 manage.setUserName(userName);
                 manage.setPassWord(password);
+                System.out.println("Cập nhật thành công");
                 return true;
             }
         }
@@ -97,11 +109,22 @@ public class AccountController implements CRUDaction {
     @Override
     public boolean delete() {
         System.out.println("Nhập vào id nhân viên muốn xoá");
-        int idEmployee = scanner.nextInt();
-        scanner.nextLine();
+        String stringEmployeeId = new Scanner(System.in).nextLine();
+        int employeeId;
+        while(true) {
+            try {
+                employeeId = check.employeeid(stringEmployeeId, manages);
+                break;
+            } catch (Exception e) {
+                System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
+                stringEmployeeId = scanner.nextLine();
+                continue;
+            }
+        }
         for (int i = 0; i < manages.size(); i++){
-            if (manages.get(i).getID() == idEmployee && manages.get(i).getRole() == 1){
+            if (manages.get(i).getID() == employeeId && manages.get(i).getRole() == 1){
                 manages.remove(i);
+                System.out.println("Xoá thành công");
                 return true;
             }
         }

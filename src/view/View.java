@@ -92,44 +92,31 @@ public class View {
                 carController.display();
                 break;
             case 2 :
-                carController.input();
-                System.out.println("Thêm xe mới thành công");
+                carController.input();     
                 break;
             case 3 :
-                if (carController.update()){
-                    System.out.println("Sửa thành công");
-                }else {
-                    System.out.println("Không tìm thấy id xe");
-                }
+                carController.update();
                 break;
             case 4 :
-                if (carController.delete()){
-                    System.out.println("Xoá thành công");
-                }else {
-                    System.out.println("Không tìm thấy id xe");
-                }
+                carController.delete();
                 break;
             case 5 :
                 carController.findCarByName();
                 break;
             case 6 :
-                carController.findCarByPrice();
+                carController.findCarByPriceBuy();
                 break;
             case 7 :
                 carController.sortCarByName();
                 break;
             case 8 :
-                carController.sortCarByPriceAscending();
+                carController.sortCarByPriceBuyAscending();
                 break;
             case 9 :
-                carController.sortCarByPriceDescending();
+                carController.sortCarByPriceBuyDescending();
                 break;
             case 10 :
-                if (customerController.update()) {
-                    System.out.println("Cập nhật thành công");
-                } else {
-                    System.out.println("Id không tồn tại");
-                }
+                customerController.update();
                 break;
             case 11 :
                 orderController.input(carList,customerList);
@@ -145,7 +132,6 @@ public class View {
                 orderController.display(carList,customerList);
                 if (orderController.updateStatus(carList)){
                     System.out.println("Cập nhật thành công");
-                    orderController.display(carList,customerList);
                 }else {
                     System.out.println("Không tìm thấy id đơn hàng");
                 }
@@ -163,8 +149,8 @@ public class View {
     public void menuManager(AccountController accountController, CarController carController, OrderController orderController, ArrayList<Customer> customerList, CustomerController customerController, ArrayList<Order> orderList){
         System.out.println("---- CHƯƠNG TRÌNH QUẢN LÝ NHÂN VIÊN ----");
         System.out.println("Chọn chức năng theo số :");
-        System.out.println("1 . Hiển thị danh sách nhân viên ");
-        System.out.println("2 . Thêm nhân viên ");
+        System.out.println("1 . Hiển thị danh sách nhân viên");
+        System.out.println("2 . Thêm nhân viên");
         System.out.println("3 . Sửa nhân viên");
         System.out.println("4 . Xoá nhân viên");
         System.out.println("5 . Đăng xuất");
@@ -185,18 +171,10 @@ public class View {
                 accountController.input();
                 break;
             case 3 :
-                if (accountController.update()){
-                    System.out.println("Sửa thành công");
-                }else {
-                    System.out.println("Id không tồn tại");
-                }
+                accountController.update();
                 break;
             case 4 :
-                if (accountController.delete()){
-                    System.out.println("Xoá thành công");
-                }else {
-                    System.out.println("Id không tồn tại");
-                }
+                accountController.delete();
                 break;
             case 5 :
                 login(carController, orderController, customerList, customerController, orderList);

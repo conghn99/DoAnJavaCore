@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class CustomerController implements CRUDaction {
     ArrayList<Customer> customerList;
+    Check check = new Check();
 
     Scanner scanner = new Scanner(System.in);
 
@@ -42,27 +43,8 @@ public class CustomerController implements CRUDaction {
         System.out.println("Nhập vào địa chỉ");
         String address = scanner.nextLine();
         System.out.println("Nhập vào số điện thoại");
-        String phoneNumber = scanner.nextLine();
-        for (Customer customer : customerList) {
-            boolean istrue = true;
-            while(istrue) {
-                if (customer.getPhone().equals(phoneNumber)) {
-                    System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
-                    phoneNumber = scanner.nextLine();
-                    for (Customer customers : customerList) {
-                        if (customers.getPhone().equals(phoneNumber)) {
-                            System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
-                            phoneNumber = scanner.nextLine();
-                        } else {
-                            istrue = false;
-                        }
-                    } 
-                }
-                else {
-                    istrue = false;
-                }
-            }
-        }
+        String stringPhoneNumber = scanner.nextLine();
+        String phoneNumber = check.phoneCheck(stringPhoneNumber, customerList);
         customerList.add(new Customer(id,name,birthDay,address,phoneNumber));
     }
 
@@ -70,38 +52,31 @@ public class CustomerController implements CRUDaction {
     public boolean update() {
         display();
         System.out.println("Nhập id khách hàng muốn sửa");
-        int customerId = new Scanner(System.in).nextInt();
+        String stringCustomerId = new Scanner(System.in).nextLine();
+        int customerID;
+        while(true) {
+            try {
+                customerID = check.customerid(stringCustomerId,customerList);
+                break;
+            } catch (Exception e) {
+                System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
+                stringCustomerId = scanner.nextLine();
+                continue;
+            }
+        }
         for (Customer customer : customerList) {
-            if (customer.getID() == customerId) {
+            if (customer.getID() == customerID) {
                 System.out.println("Nhập vào ngày sinh mới:");
                 String newBirthday = scanner.nextLine();
                 System.out.println("Nhập vào địa chỉ mới:");
                 String newAddress = scanner.nextLine();
                 System.out.println("Nhập vào số điện thoại mới:");
-                String newPhoneNumber = scanner.nextLine();
-                for (Customer customers1 : customerList) {
-                    boolean istrue = true;
-                    while(istrue) {
-                        if (customers1.getPhone().equals(newPhoneNumber)) {
-                            System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
-                            newPhoneNumber = scanner.nextLine();
-                            for (Customer customers2 : customerList) {
-                                if (customers2.getPhone().equals(newPhoneNumber)) {
-                                    System.out.println("Số điện thoại này đã tồn tại, vui lòng nhập số điện thoại khác");
-                                    newPhoneNumber = scanner.nextLine();
-                                } else {
-                                    istrue = false;
-                                }
-                            } 
-                        }
-                        else {
-                            istrue = false;
-                        }
-                    }
-                }
+                String newStringPhoneNumber = scanner.nextLine();
+                String newPhoneNumber = check.phoneCheck(newStringPhoneNumber, customerList);
                 customer.setBirthDay(newBirthday);
                 customer.setAddress(newAddress);
                 customer.setPhone(newPhoneNumber);
+                System.out.println("Cập nhật thành công");
                 return true;
             }
         }

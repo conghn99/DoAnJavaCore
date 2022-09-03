@@ -108,7 +108,7 @@ public class OrderController {
                 double total = 0;
                 for (Car car : arrayList) {
                     if (carID != car.getCarID()) continue;
-                    total = Integer.parseInt(quantity) * car.getPrice();
+                    total = Integer.parseInt(quantity) * car.getPriceBuy();
                     car.setQuantity(car.getQuantity() - quantityInt);
                     System.out.printf("Xe %s còn lại %d chiếc trong kho", car.getCarName(), car.getQuantity());
                     System.out.println();

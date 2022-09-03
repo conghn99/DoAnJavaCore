@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Check {
-    private final double minPrice = 100000000;
-    private final double maxPrice = 12000000000L;
+    private final double minPriceBuy = 100000000;
+    private final double maxPriceBuy = 12000000000L;
+    private final double minPriceHire = 500000;
+    private final double maxPriceHire = 2000000;
     Scanner scanner = new Scanner(System.in);
 
     public boolean checkname(ArrayList<Car> arrayList, String name) {
@@ -69,10 +71,10 @@ public class Check {
         return  result;
     }
 
-    public double parsePrice (String value){
+    public double parsePriceBuy (String value){
         double result = 0;
         if (checknumber(value)) {
-            result = checkMinMaxprice(value);
+            result = checkMinMaxpriceBuy(value);
         }else {
             boolean checkInput;
             do {
@@ -80,30 +82,48 @@ public class Check {
                 value = scanner.nextLine();
                 checkInput = checknumber(value);
                 if (checkInput){
-                    result = checkMinMaxprice(value);
+                    result = checkMinMaxpriceBuy(value);
                 }
             } while (!checkInput);
         }
         return result;
     }
 
-    public boolean priceminmax (double value) {
-        return !((value < minPrice) || (value > maxPrice));
+    public double parsePriceHire (String value){
+        double result = 0;
+        if (checknumber(value)) {
+            result = checkMinMaxpriceHire(value);
+        }else {
+            boolean checkInput;
+            do {
+                System.out.print("Giá xe phải là kiểu số , vui lòng nhập lại: ");
+                value = scanner.nextLine();
+                checkInput = checknumber(value);
+                if (checkInput){
+                    result = checkMinMaxpriceHire(value);
+                }
+            } while (!checkInput);
+        }
+        return result;
+    }
+
+    public boolean priceminmaxBuy (double value) {
+        return !((value < minPriceBuy) || (value > maxPriceBuy));
 
     }
 
-    public double checkMinMaxprice(String value) {
+    public double checkMinMaxpriceBuy(String value) {
         double result = 0; 
         double parseValue = Double.parseDouble(value);
-        boolean checkmm = priceminmax(parseValue);
+        boolean checkmm = priceminmaxBuy(parseValue);
         if (checkmm){
             result = parseValue;
         }
         else {
             do{
-                System.out.print("Giá của xe phải lớn hơn " + withLargeIntegers(minPrice) + " và nhỏ hơn " + withLargeIntegers(maxPrice) + " vui lòng nhập lại: ");
+                System.out.print("Giá bán của xe phải lớn hơn " + withLargeIntegers(minPriceBuy) + " và nhỏ hơn " + withLargeIntegers(maxPriceBuy) + " vui lòng nhập lại: ");
                 parseValue = Double.parseDouble(scanner.nextLine());
-                checkmm = priceminmax(parseValue);
+                checkmm = priceminmaxBuy(parseValue);
                 if (checkmm){
                     result = parseValue;
                 }
@@ -112,8 +132,33 @@ public class Check {
         return result;
     }
 
-    public boolean checkCarid(String id, ArrayList<Car> carlist){
-        for (Car car : carlist){
+    public boolean priceminmaxHire (double value) {
+        return !((value < minPriceHire) || (value > maxPriceHire));
+
+    }
+
+    public double checkMinMaxpriceHire(String value) {
+        double result = 0; 
+        double parseValue = Double.parseDouble(value);
+        boolean checkmm = priceminmaxHire(parseValue);
+        if (checkmm){
+            result = parseValue;
+        }
+        else {
+            do{
+                System.out.print("Giá thuê của xe phải lớn hơn " + withLargeIntegers(minPriceHire) + " và nhỏ hơn " + withLargeIntegers(maxPriceHire) + " vui lòng nhập lại: ");
+                parseValue = Double.parseDouble(scanner.nextLine());
+                checkmm = priceminmaxHire(parseValue);
+                if (checkmm){
+                    result = parseValue;
+                }
+            }while (!checkmm);
+        }
+        return result;
+    }
+
+    public boolean checkCarid(String id, ArrayList<Car> carList){
+        for (Car car : carList){
             if (Integer.parseInt(id) == car.getCarID()){
                 return true;
             }
@@ -121,25 +166,26 @@ public class Check {
         return false;
     }
 
-    public int carid(String stringID,ArrayList<Car> carlist){
+    public int carid(String stringID,ArrayList<Car> carList){
         int id = 0;
-        boolean checkcarid = checkCarid(stringID,carlist);
-        if (checkcarid){
+        boolean checkCarId = checkCarid(stringID, carList);
+        if (checkCarId){
             id = Integer.parseInt(stringID);
         }else {
             do {
                 System.out.println("Id xe không tồn tại, vui lòng nhập lại:");
                 stringID = scanner.nextLine();
-                checkcarid = checkCarid(stringID, carlist);
-                if (checkcarid){
+                checkCarId = checkCarid(stringID, carList);
+                if (checkCarId){
                     id = Integer.parseInt(stringID);
                 }
-            }while (!checkcarid);
+            }while (!checkCarId);
         }
         return id;
     }
-    public boolean checkCustomerId(String stringID, ArrayList<Customer> list){
-        for (Customer customer :  list){
+
+    public boolean checkCustomerId(String stringID, ArrayList<Customer> customerList){
+        for (Customer customer :  customerList){
             if (Integer.parseInt(stringID) == customer.getID()){
                 return true;
             }
@@ -147,20 +193,47 @@ public class Check {
         return false;
     }
 
-    public int customerid(String stringID, ArrayList<Customer> list){
+    public int customerid(String stringID, ArrayList<Customer> customerList){
         int id = 0;
-        boolean checkcarid = checkCustomerId(stringID,list);
-        if (checkcarid){
+        boolean checkCustomerId = checkCustomerId(stringID,customerList);
+        if (checkCustomerId){
             id = Integer.parseInt(stringID);
         }else {
             do {
                 System.out.println("Khách hàng ko tồn tại, vui lòng nhập lại");
                 stringID = scanner.nextLine();
-                checkcarid = checkCustomerId(stringID, list);
-                if (checkcarid){
+                checkCustomerId = checkCustomerId(stringID, customerList);
+                if (checkCustomerId){
                     id = Integer.parseInt(stringID);
                 }
-            }while (!checkcarid);
+            }while (!checkCustomerId);
+        }
+        return id;
+    }
+
+    public boolean checkEmployeeid(String id, ArrayList<Account> employeeList){
+        for (Account account : employeeList){
+            if (Integer.parseInt(id) == account.getID() && account.getRole() == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int employeeid(String stringID,ArrayList<Account> employeeList){
+        int id = 0;
+        boolean checkEmployeeId = checkEmployeeid(stringID,employeeList);
+        if (checkEmployeeId){
+            id = Integer.parseInt(stringID);
+        }else {
+            do {
+                System.out.println("Không tồn tại nhân viên với ID này, vui lòng nhập lại:");
+                stringID = scanner.nextLine();
+                checkEmployeeId = checkEmployeeid(stringID, employeeList);
+                if (checkEmployeeId){
+                    id = Integer.parseInt(stringID);
+                }
+            }while (!checkEmployeeId);
         }
         return id;
     }
