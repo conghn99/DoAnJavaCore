@@ -198,11 +198,11 @@ public class OrderController {
         try {
             Date dateStart = formatter.parse(start);
             Date dateEnd = formatter.parse(end);
-            System.out.printf("%s%20s%20s%20s%20s%20s%20s%n","ID","Car Name","Customer Name","Quantity","Total","Status","Date");
+            System.out.printf("%s%20s%20s%20s%20s%20s%20s%20s%n","ID","Car Name","Car Status","Customer Name","Quantity","Total","Order Status","Date Buy");
             for (Date date : listDate){
                 if (dateStart.before(date) && dateEnd.after(date)){
                     String dateString = oderList.get(check1).getDayBuy() + " / " + oderList.get(check1).getMonthBuy() + " / " + oderList.get(check1).getYearBuy();
-                    System.out.printf("%d%20s%20s%20d%20s%20s%20s%n", oderList.get(check1).getOderID(), check.carName(arrayList,oderList.get(check1).getCarID()), check.customerName(customerList,oderList.get(check1).getCustomerID()), oderList.get(check1).getQuantity(), check.withLargeIntegers(oderList.get(check1).getTotal()),oderList.get(check1).getOrderStatus(),dateString);
+                    System.out.printf("%d%20s%20s%20s%20d%20s%20s%20s%n", oderList.get(check1).getOderID(), check.carName(arrayList,oderList.get(check1).getCarID()), oderList.get(check1).getCarStatus(), check.customerName(customerList,oderList.get(check1).getCustomerID()), oderList.get(check1).getQuantity(), check.withLargeIntegers(oderList.get(check1).getTotal()),oderList.get(check1).getOrderStatus(),dateString);
                     if (oderList.get(check1).getOrderStatus() == Status.ORDER) {
                         estimateRevenues += oderList.get(check1).getTotal();
                     } else if (oderList.get(check1).getOrderStatus() == Status.PAID) {
