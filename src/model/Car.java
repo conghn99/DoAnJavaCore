@@ -4,15 +4,13 @@ public class Car{
     private int carID;
     private String carName;
     private int quantity;
-    private double priceBuy;
-    private double priceHirePerDay;
+    private double price;
 
-    public Car(int carID, String carName, int quantity, double priceBuy, double priceHirePerDay) {
+    public Car(int carID, String carName, int quantity, double price) {
         this.carID = carID;
         this.carName = carName;
         this.quantity = quantity;
-        this.priceBuy = priceBuy;
-        this.priceHirePerDay = priceHirePerDay;
+        this.price = price;
     }
 
     public int getCarID() {
@@ -39,20 +37,12 @@ public class Car{
         this.quantity = quantity;
     }
 
-    public double getPriceBuy() {
-        return priceBuy;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPriceBuy(double priceBuy) {
-        this.priceBuy = priceBuy;
-    }
-
-    public double getPriceHirePerDay() {
-        return priceHirePerDay;
-    }
-
-    public void setPriceHirePerDay(double priceHirePerDay) {
-        this.priceHirePerDay = priceHirePerDay;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
@@ -61,8 +51,7 @@ public class Car{
                 "carID=" + carID +
                 ", carName='" + carName + '\'' +
                 ", quantity=" + quantity +
-                ", priceBuy=" + priceBuy +
-                ", priceHire=" + priceHirePerDay +
+                ", price=" + price +
                 '}';
     }
 

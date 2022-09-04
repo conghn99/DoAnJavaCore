@@ -7,6 +7,7 @@ public class Order{
     private int quantity;
     private int day;
     private int month;
+    private int year;
     private double total;
     public Status status;
     public enum Status {
@@ -14,13 +15,14 @@ public class Order{
     }
 
 
-    public Order(int oderID, int carID, int customerID, int quantity, int day, int month, double total, Status status) {
+    public Order(int oderID, int carID, int customerID, int quantity, int day, int month, int year, double total, Status status) {
         this.oderID = oderID;
         this.carID = carID;
         this.customerID = customerID;
         this.quantity = quantity;
         this.day = day;
         this.month = month;
+        this.year = year;
         this.total = total;
         this.status = status;
     }
@@ -39,6 +41,14 @@ public class Order{
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public Status getStatus() {

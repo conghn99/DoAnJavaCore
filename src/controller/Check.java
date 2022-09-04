@@ -3,6 +3,7 @@ package controller;
 import model.Account;
 import model.Car;
 import model.Customer;
+import model.Order;
 
 import java.util.Date;
 import java.text.DecimalFormat;
@@ -12,10 +13,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Check {
-    private final double minPriceBuy = 100000000;
-    private final double maxPriceBuy = 12000000000L;
-    private final double minPriceHire = 500000;
-    private final double maxPriceHire = 2000000;
+    private final double minPrice = 100000000;
+    private final double maxPrice = 12000000000L;
     Scanner scanner = new Scanner(System.in);
 
     public boolean checkname(ArrayList<Car> arrayList, String name) {
@@ -71,10 +70,10 @@ public class Check {
         return  result;
     }
 
-    public double parsePriceBuy (String value){
+    public double parsePrice (String value){
         double result = 0;
         if (checknumber(value)) {
-            result = checkMinMaxpriceBuy(value);
+            result = checkMinMaxprice(value);
         }else {
             boolean checkInput;
             do {
@@ -82,73 +81,30 @@ public class Check {
                 value = scanner.nextLine();
                 checkInput = checknumber(value);
                 if (checkInput){
-                    result = checkMinMaxpriceBuy(value);
+                    result = checkMinMaxprice(value);
                 }
             } while (!checkInput);
         }
         return result;
     }
 
-    public double parsePriceHire (String value){
-        double result = 0;
-        if (checknumber(value)) {
-            result = checkMinMaxpriceHire(value);
-        }else {
-            boolean checkInput;
-            do {
-                System.out.print("Giá xe phải là kiểu số , vui lòng nhập lại: ");
-                value = scanner.nextLine();
-                checkInput = checknumber(value);
-                if (checkInput){
-                    result = checkMinMaxpriceHire(value);
-                }
-            } while (!checkInput);
-        }
-        return result;
-    }
-
-    public boolean priceminmaxBuy (double value) {
-        return !((value < minPriceBuy) || (value > maxPriceBuy));
+    public boolean priceminmax (double value) {
+        return !((value < minPrice) || (value > maxPrice));
 
     }
 
-    public double checkMinMaxpriceBuy(String value) {
+    public double checkMinMaxprice(String value) {
         double result = 0; 
         double parseValue = Double.parseDouble(value);
-        boolean checkmm = priceminmaxBuy(parseValue);
+        boolean checkmm = priceminmax(parseValue);
         if (checkmm){
             result = parseValue;
         }
         else {
             do{
-                System.out.print("Giá bán của xe phải lớn hơn " + withLargeIntegers(minPriceBuy) + " và nhỏ hơn " + withLargeIntegers(maxPriceBuy) + " vui lòng nhập lại: ");
+                System.out.print("Giá bán của xe phải lớn hơn " + withLargeIntegers(minPrice) + " và nhỏ hơn " + withLargeIntegers(maxPrice) + " vui lòng nhập lại: ");
                 parseValue = Double.parseDouble(scanner.nextLine());
-                checkmm = priceminmaxBuy(parseValue);
-                if (checkmm){
-                    result = parseValue;
-                }
-            }while (!checkmm);
-        }
-        return result;
-    }
-
-    public boolean priceminmaxHire (double value) {
-        return !((value < minPriceHire) || (value > maxPriceHire));
-
-    }
-
-    public double checkMinMaxpriceHire(String value) {
-        double result = 0; 
-        double parseValue = Double.parseDouble(value);
-        boolean checkmm = priceminmaxHire(parseValue);
-        if (checkmm){
-            result = parseValue;
-        }
-        else {
-            do{
-                System.out.print("Giá thuê của xe phải lớn hơn " + withLargeIntegers(minPriceHire) + " và nhỏ hơn " + withLargeIntegers(maxPriceHire) + " vui lòng nhập lại: ");
-                parseValue = Double.parseDouble(scanner.nextLine());
-                checkmm = priceminmaxHire(parseValue);
+                checkmm = priceminmax(parseValue);
                 if (checkmm){
                     result = parseValue;
                 }
@@ -180,6 +136,33 @@ public class Check {
                     id = Integer.parseInt(stringID);
                 }
             }while (!checkCarId);
+        }
+        return id;
+    }
+
+    public boolean checkOrderid(String id, ArrayList<Order> orderList){
+        for (Order order : orderList){
+            if (Integer.parseInt(id) == order.getOderID()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int orderid(String stringID,ArrayList<Order> orderList){
+        int id = 0;
+        boolean checkOrderId = checkOrderid(stringID, orderList);
+        if (checkOrderId){
+            id = Integer.parseInt(stringID);
+        }else {
+            do {
+                System.out.println("Id đơn hàng không tồn tại, vui lòng nhập lại:");
+                stringID = scanner.nextLine();
+                checkOrderId = checkOrderid(stringID, orderList);
+                if (checkOrderId){
+                    id = Integer.parseInt(stringID);
+                }
+            }while (!checkOrderId);
         }
         return id;
     }

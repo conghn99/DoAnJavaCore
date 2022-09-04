@@ -76,73 +76,71 @@ public class View {
         System.out.println("11 . Lên đơn hàng");
         System.out.println("12 . Danh sách đơn hàng");
         System.out.println("13 . Sửa trạng thái đơn hàng");
-        System.out.println("14 . Hiển thị đơn hàng trong khoảng thời gian");
-        System.out.println("15 . Đăng xuất");
+        System.out.println("14 . Đăng xuất");
         System.out.println("0 . Thoát");
         System.out.println("Chọn chức năng :");
 
-        int key = scanner.nextInt();
-
-        switch (key) {
-            case 0 :
-                System.out.println("GOODBYE!!!");
-                System.exit(0);
-                break;
-            case 1 :
-                carController.display();
-                break;
-            case 2 :
-                carController.input();     
-                break;
-            case 3 :
-                carController.update();
-                break;
-            case 4 :
-                carController.delete();
-                break;
-            case 5 :
-                carController.findCarByName();
-                break;
-            case 6 :
-                carController.findCarByPriceBuy();
-                break;
-            case 7 :
-                carController.sortCarByName();
-                break;
-            case 8 :
-                carController.sortCarByPriceBuyAscending();
-                break;
-            case 9 :
-                carController.sortCarByPriceBuyDescending();
-                break;
-            case 10 :
-                customerController.update();
-                break;
-            case 11 :
-                orderController.input(carList,customerList);
-                break;
-            case 12 :
-                if(orderList.size() == 0) {
-                    System.out.println("Chưa có đơn hàng nào");
-                } else {
+        while(true) {
+            try {
+                int key = new Scanner(System.in).nextInt();
+                switch (key) {
+                case 0 :
+                    System.out.println("GOODBYE!!!");
+                    System.exit(0);
+                    break;
+                case 1 :
+                    carController.display();
+                    break;
+                case 2 :
+                    carController.input();     
+                    break;
+                case 3 :
+                    carController.update();
+                    break;
+                case 4 :
+                    carController.delete();
+                    break;
+                case 5 :
+                    carController.findCarByName();
+                    break;
+                case 6 :
+                    carController.findCarByPriceBuy();
+                    break;
+                case 7 :
+                    carController.sortCarByName();
+                    break;
+                case 8 :
+                    carController.sortCarByPriceBuyAscending();
+                    break;
+                case 9 :
+                    carController.sortCarByPriceBuyDescending();
+                    break;
+                case 10 :
+                    customerController.update();
+                    break;
+                case 11 :
+                    orderController.input(carList,customerList);
+                    break;
+                case 12 :
+                    if(orderList.size() == 0) {
+                        System.out.println("Chưa có đơn hàng nào");
+                    } else {
+                        orderController.display(carList,customerList);
+                    }
+                    break;
+                case 13 :
                     orderController.display(carList,customerList);
-                }
+                    orderController.updateStatus(carList);
+                    break;
+                case 14 :
+                    login(carController, orderController, customerList, customerController, orderList);
+                    break;
+            }
                 break;
-            case 13 :
-                orderController.display(carList,customerList);
-                if (orderController.updateStatus(carList)){
-                    System.out.println("Cập nhật thành công");
-                }else {
-                    System.out.println("Không tìm thấy id đơn hàng");
-                }
-                break;
-            case 14 :
-                orderController.getListTime();
-                orderController.checkTime(carList,customerList);
-                break;
-            case 15 :
-                login(carController, orderController, customerList, customerController, orderList);
-                break;
+            } catch (Exception e) {
+                System.out.println("Chức năng phải nhập bằng số, xin hãy nhập lại");
+                continue;
+            }
         }
     }
 
@@ -153,32 +151,44 @@ public class View {
         System.out.println("2 . Thêm nhân viên");
         System.out.println("3 . Sửa nhân viên");
         System.out.println("4 . Xoá nhân viên");
-        System.out.println("5 . Đăng xuất");
+        System.out.println("5 . Hiển thị đơn hàng và doanh thu trong khoảng thời gian");
+        System.out.println("6 . Đăng xuất");
         System.out.println("0 . Thoát");
         System.out.println("Chọn chức năng :");
 
-        int key = scanner.nextInt();
-
-        switch (key) {
-            case 0 :
-                System.out.println("GOODBYE!!!");
-                System.exit(0);
+        while(true) {
+            try {
+                int key = new Scanner(System.in).nextInt();
+                switch (key) {
+                    case 0 :
+                        System.out.println("GOODBYE!!!");
+                        System.exit(0);
+                        break;
+                    case 1 :
+                        accountController.display();
+                        break;
+                    case 2 :
+                        accountController.input();
+                        break;
+                    case 3 :
+                        accountController.update();
+                        break;
+                    case 4 :
+                        accountController.delete();
+                        break;
+                    case 5 :
+                        orderController.getListTime();
+                        orderController.checkTime(carList,customerList);
+                        break;
+                    case 6 :
+                        login(carController, orderController, customerList, customerController, orderList);
+                        break;
+                }
                 break;
-            case 1 :
-                accountController.display();
-                break;
-            case 2 :
-                accountController.input();
-                break;
-            case 3 :
-                accountController.update();
-                break;
-            case 4 :
-                accountController.delete();
-                break;
-            case 5 :
-                login(carController, orderController, customerList, customerController, orderList);
-                break;
-        }
+            } catch (Exception e) {
+                System.out.println("Chức năng phải nhập bằng số, xin hãy nhập lại");
+                continue;
+            }
+        } 
     }
 }

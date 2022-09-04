@@ -19,17 +19,17 @@ public class CarController implements CRUDaction {
     }
 
     public void addCar(){
-        carArrayList.add(new Car(1, "Lamborghini", 50, 1000000000, 1000000));
-        carArrayList.add(new Car(2, "Ferrari", 30, 3000000000L, 1200000));
-        carArrayList.add(new Car(3, "Limousine", 100, 700000000,800000));
+        carArrayList.add(new Car(1, "Lamborghini", 50, 1000000000));
+        carArrayList.add(new Car(2, "Ferrari", 30, 3000000000L));
+        carArrayList.add(new Car(3, "Limousine", 100, 700000000));
     }
 
     @Override
     public void display() {
         
-        System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Price Buy","Price Hire Per Day");
+        System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
-            System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(), check.withLargeIntegers(car.getPriceBuy()), check.withLargeIntegers(car.getPriceHirePerDay()));
+            System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(), check.withLargeIntegers(car.getPrice()));
         }
     }
 
@@ -58,11 +58,8 @@ public class CarController implements CRUDaction {
         int quantity = check.parseQuantity(stringQuantity);
         System.out.println("Vui lòng nhập giá xe cho mua");
         String stringPriceBuy = scanner.nextLine();
-        double priceBuy = check.parsePriceBuy(stringPriceBuy);
-        System.out.println("Vui lòng nhập giá xe cho thuê");
-        String stringPriceHire = scanner.nextLine();
-        double priceHire = check.parsePriceHire(stringPriceHire);
-        carArrayList.add(new Car(id,name,quantity,priceBuy,priceHire));
+        double price = check.parsePrice(stringPriceBuy);
+        carArrayList.add(new Car(id,name,quantity,price));
         System.out.println("Thêm xe mới thành công");
     }
 
@@ -87,15 +84,11 @@ public class CarController implements CRUDaction {
                 System.out.println("Nhập số lượng mới");
                 String stringQuantity = scanner.nextLine();
                 int quantity = check.parseQuantity(stringQuantity);
-                System.out.println("Nhập giá tiền bán mới");
+                System.out.println("Nhập giá tiền mới");
                 String stringPriceBuy = scanner.nextLine();
-                double priceBuy = check.parsePriceBuy(stringPriceBuy);
-                System.out.println("Nhập giá tiền thuê mới");
-                String stringPriceHire = scanner.nextLine();
-                double priceHire = check.parsePriceBuy(stringPriceHire);
+                double price = check.parsePrice(stringPriceBuy);
                 car.setQuantity(quantity);
-                car.setPriceBuy(priceBuy);
-                car.setPriceHirePerDay(priceHire);
+                car.setPrice(price);
                 System.out.println("Cập nhật thành công");
                 return true;
             }
@@ -132,10 +125,10 @@ public class CarController implements CRUDaction {
         System.out.println("Nhập vào tên xe muốn tìm");
         String nameCar = scanner.nextLine();
         boolean isTrue = false;
-        System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Price","Price Hire Per Day");
+        System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
             if (car.getCarName().contains(nameCar)) {
-                System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()),check.withLargeIntegers(car.getPriceHirePerDay()));
+                System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
                 isTrue = true;
             }
         }
@@ -148,10 +141,10 @@ public class CarController implements CRUDaction {
         System.out.println("Nhập vào giá xe muốn tìm");
         double priceCar = scanner.nextDouble();
         boolean isTrue = false;
-        System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Price Buy","Price Hire Per Day");
+        System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
-            if (car.getPriceBuy() == priceCar) {
-                System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()),check.withLargeIntegers(car.getPriceHirePerDay()));
+            if (car.getPrice() == priceCar) {
+                System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
                 isTrue = true;
             }
         }
@@ -164,12 +157,12 @@ public class CarController implements CRUDaction {
         Collections.sort(carArrayList, new Comparator<Car>() {
             @Override
             public int compare(Car o1, Car o2) {
-                return o2.getPriceBuy() - o1.getPriceBuy() > 0 ? 1 : -1;
+                return o2.getPrice() - o1.getPrice() > 0 ? 1 : -1;
             }
         });
-        System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Price","Price Hire Per Day");
+        System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
-            System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()),check.withLargeIntegers(car.getPriceHirePerDay()));
+            System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
         }
     }
 
@@ -177,12 +170,12 @@ public class CarController implements CRUDaction {
         Collections.sort(carArrayList, new Comparator<Car>() {
             @Override
             public int compare(Car o1, Car o2) {
-                return o1.getPriceBuy() - o2.getPriceBuy() > 0 ? 1 : -1;
+                return o1.getPrice() - o2.getPrice() > 0 ? 1 : -1;
             }
         });
-        System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Price","Price Hire Per Day");
+        System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
-            System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()),check.withLargeIntegers(car.getPriceHirePerDay()));
+            System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
         }
     }
 
@@ -193,17 +186,17 @@ public class CarController implements CRUDaction {
                 return o1.getCarName().compareTo(o2.getCarName());
             }
         });
-        System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Price","Price Hire Per Day");
+        System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList) {
-            System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()),check.withLargeIntegers(car.getPriceHirePerDay()));
+            System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPrice()));
         }
     }
 
     public void displayCar(){
-        System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Price","Price Hire Per Day");
+        System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Price");
         for (Car car : carArrayList){
             if (car.getQuantity() > 0) {
-                System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(), check.withLargeIntegers(car.getPriceBuy()),check.withLargeIntegers(car.getPriceHirePerDay()));
+                System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(), check.withLargeIntegers(car.getPrice()));
             }
         }
     }
