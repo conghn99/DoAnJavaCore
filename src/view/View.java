@@ -66,81 +66,108 @@ public class View {
         System.out.println("1 . Xem danh sách xe trong kho ");
         System.out.println("2 . Thêm mới xe");
         System.out.println("3 . Cập nhật xe");
-        System.out.println("4 . Xóa");
+        System.out.println("4 . Xóa xe");
         System.out.println("5 . Tìm kiếm theo tên");
-        System.out.println("6 . Tìm kiếm theo giá");
+        System.out.println("6 . Tìm kiếm theo giá mua");
         System.out.println("7 . Sắp xếp theo tên");
-        System.out.println("8 . Sắp xếp theo giá tăng dần");
-        System.out.println("9 . Sắp xếp theo giá giảm dần");
+        System.out.println("8 . Sắp xếp theo giá mua tăng dần");
+        System.out.println("9 . Sắp xếp theo giá mua giảm dần");
         System.out.println("10 . Sửa thông tin khách hàng");
-        System.out.println("11 . Lên đơn hàng");
-        System.out.println("12 . Danh sách đơn hàng");
-        System.out.println("13 . Sửa trạng thái đơn hàng");
-        System.out.println("14 . Đăng xuất");
+        System.out.println("11 . Quản lý đơn hàng mua xe");
+        System.out.println("12 . Quản lý đơn hàng thuê xe");
+        System.out.println("13 . Đăng xuất");
         System.out.println("0 . Thoát");
         System.out.println("Chọn chức năng :");
 
-        while(true) {
-            try {
-                int key = new Scanner(System.in).nextInt();
-                switch (key) {
-                case 0 :
-                    System.out.println("GOODBYE!!!");
-                    System.exit(0);
+        int key = new Scanner(System.in).nextInt();
+        switch (key) {
+        case 0 :
+            System.out.println("GOODBYE!!!");
+            System.exit(0);
+            break;
+        case 1 :
+            carController.display();
+            break;
+        case 2 :
+            carController.input();     
+            break;
+        case 3 :
+            carController.update();
+            break;
+        case 4 :
+            carController.delete();
+            break;
+        case 5 :
+            carController.findCarByName();
+            break;
+        case 6 :
+            carController.findCarByPriceBuy();
+            break;
+        case 7 :
+            carController.sortCarByName();
+            break;
+        case 8 :
+            carController.sortCarByPriceBuyAscending();
+            break;
+        case 9 :
+            carController.sortCarByPriceBuyDescending();
+            break;
+        case 10 :
+            customerController.update();
+            break;
+        case 11 :
+            System.out.println("---- CHƯƠNG TRÌNH QUẢN LÝ ĐƠN MUA XE ----");
+            System.out.println("Chọn chức năng theo số :");
+            System.out.println("1 . Lên đơn mua xe");
+            System.out.println("2 . Xem danh sách đơn mua xe");
+            System.out.println("3 . Sửa trạng thái đơn mua xe");
+            System.out.println("Chọn chức năng :");
+            int a = new Scanner(System.in).nextInt();
+            switch(a) {
+                case 1:
+                    orderController.inputBuy(carList, customerList);
                     break;
-                case 1 :
-                    carController.display();
-                    break;
-                case 2 :
-                    carController.input();     
-                    break;
-                case 3 :
-                    carController.update();
-                    break;
-                case 4 :
-                    carController.delete();
-                    break;
-                case 5 :
-                    carController.findCarByName();
-                    break;
-                case 6 :
-                    carController.findCarByPriceBuy();
-                    break;
-                case 7 :
-                    carController.sortCarByName();
-                    break;
-                case 8 :
-                    carController.sortCarByPriceBuyAscending();
-                    break;
-                case 9 :
-                    carController.sortCarByPriceBuyDescending();
-                    break;
-                case 10 :
-                    customerController.update();
-                    break;
-                case 11 :
-                    orderController.input(carList,customerList);
-                    break;
-                case 12 :
+                case 2:
                     if(orderList.size() == 0) {
                         System.out.println("Chưa có đơn hàng nào");
                     } else {
-                        orderController.display(carList,customerList);
+                        orderController.displayBuy(carList,customerList);
                     }
                     break;
-                case 13 :
-                    orderController.display(carList,customerList);
+                case 3:
+                    orderController.displayBuy(carList,customerList);
                     orderController.updateStatus(carList);
                     break;
-                case 14 :
-                    login(carController, orderController, customerList, customerController, orderList);
+            }
+            break;
+        case 12 :
+            System.out.println("---- CHƯƠNG TRÌNH QUẢN LÝ ĐƠN THUÊ XE ----");
+            System.out.println("Chọn chức năng theo số :");
+            System.out.println("1 . Lên đơn thuê xe");
+            System.out.println("2 . Xem danh sách đơn thuê xe");
+            System.out.println("3 . Sửa trạng thái đơn thuê xe");
+            System.out.println("Chọn chức năng :");
+            int b = new Scanner(System.in).nextInt();
+            switch(b) {
+                case 1:
+                    orderController.inputHire(carList, customerList);
+                    break;
+                case 2:
+                    if(orderList.size() == 0) {
+                        System.out.println("Chưa có đơn hàng nào");
+                    } else {
+                        orderController.displayHire(carList,customerList);
+                    }
+                    break;
+                case 3:
+                    orderController.displayHire(carList,customerList);
+                    orderController.updateStatus(carList);
                     break;
             }
-                break;
-            } catch (Exception e) {
-                System.out.println("Chức năng phải nhập bằng số, xin hãy nhập lại");
-                continue;
-            }
+            break;
+        case 13 :
+            login(carController, orderController, customerList, customerController, orderList);
+            break;
         }
     }
 
@@ -156,39 +183,31 @@ public class View {
         System.out.println("0 . Thoát");
         System.out.println("Chọn chức năng :");
 
-        while(true) {
-            try {
-                int key = new Scanner(System.in).nextInt();
-                switch (key) {
-                    case 0 :
-                        System.out.println("GOODBYE!!!");
-                        System.exit(0);
-                        break;
-                    case 1 :
-                        accountController.display();
-                        break;
-                    case 2 :
-                        accountController.input();
-                        break;
-                    case 3 :
-                        accountController.update();
-                        break;
-                    case 4 :
-                        accountController.delete();
-                        break;
-                    case 5 :
-                        orderController.getListTime();
-                        orderController.checkTime(carList,customerList);
-                        break;
-                    case 6 :
-                        login(carController, orderController, customerList, customerController, orderList);
-                        break;
-                }
+        int key = new Scanner(System.in).nextInt();
+        switch (key) {
+            case 0 :
+                System.out.println("GOODBYE!!!");
+                System.exit(0);
                 break;
-            } catch (Exception e) {
-                System.out.println("Chức năng phải nhập bằng số, xin hãy nhập lại");
-                continue;
-            }
-        } 
+            case 1 :
+                accountController.display();
+                break;
+            case 2 :
+                accountController.input();
+                break;
+            case 3 :
+                accountController.update();
+                break;
+            case 4 :
+                accountController.delete();
+                break;
+            case 5 :
+                orderController.getListTime();
+                orderController.checkTime(carList,customerList);
+                break;
+            case 6 :
+                login(carController, orderController, customerList, customerController, orderList);
+                break;
+        }
     }
 }

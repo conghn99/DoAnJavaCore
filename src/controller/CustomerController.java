@@ -17,7 +17,8 @@ public class CustomerController implements CRUDaction {
     }
 
     public void addCustomer(){
-        customerList.add(new Customer(1,"Huong","20/5/1970","Ha Noi","0972645112"));
+        customerList.add(new Customer(1,"Huong","20/5/1993","Ha Noi","0912345678"));
+        customerList.add(new Customer(2,"Cuong","20/8/1990","Ha Noi","0987654321"));
     }
 
     @Override

@@ -18,9 +18,9 @@ public class Check {
     private final double maxPrice = 12000000000L;
     Scanner scanner = new Scanner(System.in);
 
-    public boolean checkname(ArrayList<Car> arrayList, String name) {
+    public boolean checkname(ArrayList<Car> arrayList, String name, String carStatus) {
         for (Car car : arrayList) {
-            if (car.getCarName().equals(name)) {
+            if (car.getCarName().equals(name) && car.getCarStatus().equals(carStatus)) {
                 return false;
             }
         }
