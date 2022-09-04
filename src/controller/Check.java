@@ -4,6 +4,7 @@ import model.Account;
 import model.Car;
 import model.Customer;
 import model.Order;
+import model.Account.Role;
 
 import java.util.Date;
 import java.text.DecimalFormat;
@@ -196,7 +197,7 @@ public class Check {
 
     public boolean checkEmployeeid(String id, ArrayList<Account> employeeList){
         for (Account account : employeeList){
-            if (Integer.parseInt(id) == account.getID() && account.getRole() == 1){
+            if (Integer.parseInt(id) == account.getID() && account.getRole() == Role.EMPLOYEE){
                 return true;
             }
         }
