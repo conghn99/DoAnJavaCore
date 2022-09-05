@@ -279,7 +279,7 @@ public class Check {
     public String passwordCheck(String password) {
         boolean passwordCheck;
         do {
-            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[.,-_;]).{7,15}$";
+            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{7,15}$";
             passwordCheck = password.matches(passwordPattern);
             if (!passwordCheck) {
                 System.out.println("Password ko hợp lệ, xin hãy nhập lại password");
