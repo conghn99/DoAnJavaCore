@@ -135,8 +135,12 @@ public class View {
                     }
                     break;
                 case 3:
-                    orderController.displayBuy(carList,customerList);
-                    orderController.updateStatus(carList);
+                    if(orderList.size() == 0) {
+                        System.out.println("Chưa có đơn hàng nào");
+                    } else {
+                        orderController.displayBuy(carList,customerList);
+                        orderController.updateStatus(carList);
+                    }
                     break;
             }
             break;
@@ -160,8 +164,12 @@ public class View {
                     }
                     break;
                 case 3:
-                    orderController.displayHire(carList,customerList);
-                    orderController.updateStatus(carList);
+                    if(orderList.size() == 0) {
+                        System.out.println("Chưa có đơn hàng nào");
+                    } else {
+                        orderController.displayHire(carList,customerList);
+                        orderController.updateStatus(carList);
+                    }
                     break;
             }
             break;
