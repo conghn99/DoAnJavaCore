@@ -2,7 +2,6 @@ package controller;
 
 import action.CRUDaction;
 import model.Account;
-import model.Admin;
 import model.Account.Role;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class AccountController implements CRUDaction {
     }
 
     public void addAccount(){
-        manages.add(new Admin(1,"Dat","13/12/1998","dat","1234", Role.MANAGER, "Dat@gmail.com"));
+        manages.add(new Account(1,"Dat","13/12/1998","dat","1234", Role.MANAGER));
         manages.add(new Account(1,"Tring Quang Dung","13/12/1996","dung","1234",Role.EMPLOYEE));
         manages.add(new Account(2,"Nguyen Viet Long","13/5/2002","long","1234",Role.EMPLOYEE));
         manages.add(new Account(3,"Do Thanh Cong","13/11/1999","cong","1234",Role.EMPLOYEE));
