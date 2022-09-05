@@ -260,7 +260,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("Số lượng nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringcarID = scanner.nextLine();
+                quantity = scanner.nextLine();
                 continue;
             }
         }
@@ -358,7 +358,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("Số lượng nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringcarID = scanner.nextLine();
+                quantity = scanner.nextLine();
                 continue;
             }
         }
