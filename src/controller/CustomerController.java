@@ -38,13 +38,13 @@ public class CustomerController implements CRUDaction {
             id = (customerList.get(customerList.size() - 1)).getID() + 1;
         }
         System.out.println("Nhập vào tên khách hàng");
-        String name = scanner.nextLine();
+        String name = new Scanner(System.in).nextLine();
         System.out.println("Nhập vào ngày sinh khách hàng");
-        String birthDay = scanner.nextLine();
+        String birthDay = new Scanner(System.in).nextLine();
         System.out.println("Nhập vào địa chỉ");
-        String address = scanner.nextLine();
+        String address = new Scanner(System.in).nextLine();
         System.out.println("Nhập vào số điện thoại");
-        String stringPhoneNumber = scanner.nextLine();
+        String stringPhoneNumber = new Scanner(System.in).nextLine();
         String phoneNumber = check.phoneCheck(stringPhoneNumber, customerList);
         customerList.add(new Customer(id,name,birthDay,address,phoneNumber));
     }
@@ -61,18 +61,18 @@ public class CustomerController implements CRUDaction {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringCustomerId = scanner.nextLine();
+                stringCustomerId = new Scanner(System.in).nextLine();
                 continue;
             }
         }
         for (Customer customer : customerList) {
             if (customer.getID() == customerID) {
                 System.out.println("Nhập vào ngày sinh mới:");
-                String newBirthday = scanner.nextLine();
+                String newBirthday = new Scanner(System.in).nextLine();
                 System.out.println("Nhập vào địa chỉ mới:");
-                String newAddress = scanner.nextLine();
+                String newAddress = new Scanner(System.in).nextLine();
                 System.out.println("Nhập vào số điện thoại mới:");
-                String newStringPhoneNumber = scanner.nextLine();
+                String newStringPhoneNumber = new Scanner(System.in).nextLine();
                 String newPhoneNumber = check.phoneCheck(newStringPhoneNumber, customerList);
                 customer.setBirthDay(newBirthday);
                 customer.setAddress(newAddress);

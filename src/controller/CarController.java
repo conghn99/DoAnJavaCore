@@ -11,8 +11,6 @@ import java.util.Scanner;
 public class CarController implements CRUDaction {
     Check check = new Check();
     ArrayList<Car> carArrayList = new ArrayList<>();
-    
-    Scanner scanner = new Scanner(System.in);
 
     public CarController(ArrayList<Car> carArrayList) {
         this.carArrayList = carArrayList;
@@ -44,23 +42,44 @@ public class CarController implements CRUDaction {
              id = carArrayList.get(carArrayList.size() - 1).getCarID() + 1;
         }
         System.out.println("Vui lòng nhập tên: ");
-        String name = scanner.nextLine();
-        System.out.println("Vui lòng nhập trạng thái");
-        String carStatus = scanner.nextLine();
+        String name = new Scanner(System.in).nextLine();
+        System.out.println("Vui lòng nhập trạng thái xe theo số");
+        String carStatus = null;
+        System.out.println("1 . Xe để bán");
+        System.out.println("2 . Xe cho thuê");
+        int a = new Scanner(System.in).nextInt();
+        switch (a) {
+            case 1:
+                carStatus = "CarForBuy";
+                break;
+            case 2:
+                carStatus = "CarForHire";
+                break;
+        }
         boolean isTrue = true;
         while(isTrue) {
             if (!check.checkname(carArrayList,name,carStatus)){
-                System.out.println("Tên sản phẩm đã tồn tại. Vui lòng nhập lại");
+                System.out.println("Xe đã tồn tại. Vui lòng nhập lại");
                 name = new Scanner(System.in).nextLine();
-                System.out.println("Vui lòng nhập trạng thái");
-                carStatus = new Scanner(System.in).nextLine();
+                System.out.println("Vui lòng nhập trạng thái xe theo số");
+                System.out.println("1 . Xe để bán");
+                System.out.println("2 . Xe cho thuê");
+                a = new Scanner(System.in).nextInt();
+                switch (a) {
+                    case 1:
+                        carStatus = "CarForBuy";
+                        break;
+                    case 2:
+                        carStatus = "CarForHire";
+                        break;
+                }
             }
             else {
                 isTrue = false;
             }
         }
         System.out.println("Vui lòng nhập số lượng");
-        String stringQuantity = scanner.nextLine();
+        String stringQuantity = new Scanner(System.in).nextLine();
         int quantity = check.parseQuantity(stringQuantity);
         double priceBuy = 0;
         double priceHire = 0;
@@ -70,7 +89,7 @@ public class CarController implements CRUDaction {
             priceBuy = check.parsePrice(stringPriceBuy);
         } else if (carStatus.equals("CarForHire")) {
             System.out.println("Vui lòng nhập giá xe cho thuê");
-            priceHire = scanner.nextDouble();
+            priceHire = new Scanner(System.in).nextDouble();
         }
         carArrayList.add(new Car(id,name,quantity,priceBuy,priceHire,carStatus));
         System.out.println("Thêm xe mới thành công");
@@ -88,17 +107,16 @@ public class CarController implements CRUDaction {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringIdCar = scanner.nextLine();
+                stringIdCar = new Scanner(System.in).nextLine();
                 continue;
             }
         }
         for (Car car : carArrayList) {
             if (car.getCarID() == carID) {
                 System.out.println("Nhập số lượng mới");
-                String stringQuantity = scanner.nextLine();
+                String stringQuantity = new Scanner(System.in).nextLine();
                 int quantity = check.parseQuantity(stringQuantity);
-                System.out.println("Vui lòng nhập trạng thái");
-                String carStatus = scanner.nextLine();
+                String carStatus = car.getCarStatus();
                 double priceBuy = 0;
                 double priceHire = 0;
                 if (carStatus.equals("CarForBuy")) {
@@ -107,7 +125,7 @@ public class CarController implements CRUDaction {
                     priceBuy = check.parsePrice(stringPriceBuy);
                 } else if (carStatus.equals("CarForHire")) {
                     System.out.println("Vui lòng nhập giá xe cho thuê");
-                    priceHire = scanner.nextDouble();
+                    priceHire = new Scanner(System.in).nextDouble();
                 }
                 car.setQuantity(quantity);
                 car.setPriceBuy(priceBuy);
@@ -130,7 +148,7 @@ public class CarController implements CRUDaction {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringCarId = scanner.nextLine();
+                stringCarId = new Scanner(System.in).nextLine();
                 continue;
             }
         }
@@ -146,7 +164,7 @@ public class CarController implements CRUDaction {
 
     public void findCarByName(){
         System.out.println("Nhập vào tên xe muốn tìm");
-        String nameCar = scanner.nextLine();
+        String nameCar = new Scanner(System.in).nextLine();
         boolean isTrue = false;
         System.out.printf("%s%20s%20s%15s%25s%30s%n","ID","Name","Quantity","Status","Buy Price", "Hire Price");
         for (Car car : carArrayList) {
@@ -162,11 +180,11 @@ public class CarController implements CRUDaction {
 
     public void findCarByPriceBuy(){
         System.out.println("Nhập vào giá mua xe muốn tìm");
-        double priceCar = scanner.nextDouble();
+        double priceCar = new Scanner(System.in).nextDouble();
         boolean isTrue = false;
         System.out.printf("%s%20s%20s%20s%30s%n","ID","Name","Quantity","Buy Price","Hire Price");
         for (Car car : carArrayList) {
-            if (car.getPriceBuy() == priceCar) {
+            if (car.getPriceBuy() == priceCar && car.getCarStatus().equals("CarForBuy")) {
                 System.out.printf("%d%20s%17d%25s%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()));
                 isTrue = true;
             }
@@ -185,7 +203,9 @@ public class CarController implements CRUDaction {
         });
         System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Buy Price");
         for (Car car : carArrayList) {
-            System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()));
+            if (car.getCarStatus().equals("CarForBuy")) {
+                System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()));
+            }
         }
     }
 
@@ -198,7 +218,9 @@ public class CarController implements CRUDaction {
         });
         System.out.printf("%s%20s%20s%20s%n","ID","Name","Quantity","Buy Price");
         for (Car car : carArrayList) {
-            System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()));
+            if (car.getCarStatus().equals("CarForBuy")) {
+                System.out.printf("%d%20s%17d%25s%n",car.getCarID(),car.getCarName(),car.getQuantity(),check.withLargeIntegers(car.getPriceBuy()));
+            }
         }
     }
 

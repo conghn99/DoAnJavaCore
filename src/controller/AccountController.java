@@ -60,14 +60,14 @@ public class AccountController implements CRUDaction {
             id = (manages.get(manages.size() - 1)).getID() + 1;
         }
         System.out.println("Nhập vào tên nhân viên");
-        String name = scanner.nextLine();
+        String name = new Scanner(System.in).nextLine();
         System.out.println("Nhập vào ngày sinh nhân viên");
-        String birthDay = scanner.nextLine();
+        String birthDay = new Scanner(System.in).nextLine();
         System.out.println("Nhập vào tên đăng nhập");
-        String stringUserName = scanner.nextLine();
+        String stringUserName = new Scanner(System.in).nextLine();
         String userName = check.userNameCheck(stringUserName, manages);
         System.out.println("Nhập vào mật khẩu");
-        String stringPassword = scanner.nextLine();
+        String stringPassword = new Scanner(System.in).nextLine();
         String password = check.passwordCheck(stringPassword);
         manages.add(new Account(id,name,birthDay,userName,password,Role.EMPLOYEE));
     }
@@ -84,19 +84,19 @@ public class AccountController implements CRUDaction {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringEmployeeId = scanner.nextLine();
+                stringEmployeeId = new Scanner(System.in).nextLine();
                 continue;
             }
         }
         for (Account manage : manages) {
             if (manage.getID() == employeeId && manage.getRole() == Role.EMPLOYEE) {
                 System.out.println("Nhập vào ngày sinh nhân viên mới");
-                String birthDay = scanner.nextLine();
+                String birthDay = new Scanner(System.in).nextLine();
                 System.out.println("Nhập vào tên đăng nhập mới");
-                String stringUserName = scanner.nextLine();
+                String stringUserName = new Scanner(System.in).nextLine();
                 String userName = check.userNameCheck(stringUserName, manages);
                 System.out.println("Nhập vào mật khẩu mới");
-                String stringPassword = scanner.nextLine();
+                String stringPassword = new Scanner(System.in).nextLine();
                 String password = check.passwordCheck(stringPassword);
                 manage.setBirthDay(birthDay);
                 manage.setUserName(userName);
@@ -110,6 +110,7 @@ public class AccountController implements CRUDaction {
 
     @Override
     public boolean delete() {
+        display();
         System.out.println("Nhập vào id nhân viên muốn xoá");
         String stringEmployeeId = new Scanner(System.in).nextLine();
         int employeeId;
@@ -119,7 +120,7 @@ public class AccountController implements CRUDaction {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringEmployeeId = scanner.nextLine();
+                stringEmployeeId = new Scanner(System.in).nextLine();
                 continue;
             }
         }

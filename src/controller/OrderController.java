@@ -133,14 +133,14 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringId = scanner.nextLine();
+                stringId = new Scanner(System.in).nextLine();
                 continue;
             }
         }
         for (Order order : oderList){
             if (order.getOderID() == orderID){
                 System.out.println("Chọn trạng thái mới (1. Thanh toán - 2. Huỷ bỏ)");
-                int status = scanner.nextInt();
+                int status = new Scanner(System.in).nextInt();
                 switch (status){
                     case 1 :
                         order.setStatus(Order.Status.PAID);
@@ -232,7 +232,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringCustomerID = scanner.nextLine();
+                stringCustomerID = new Scanner(System.in).nextLine();
                 continue;
             }
         }
@@ -247,7 +247,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringcarID = scanner.nextLine();
+                stringcarID = new Scanner(System.in).nextLine();
                 continue;
             }
         }
@@ -260,7 +260,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("Số lượng nhập vào phải là kiểu số, xin hãy nhập lại");
-                quantity = scanner.nextLine();
+                quantity = new Scanner(System.in).nextLine();
                 continue;
             }
         }
@@ -330,7 +330,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringCustomerID = scanner.nextLine();
+                stringCustomerID = new Scanner(System.in).nextLine();
                 continue;
             }
         }
@@ -345,7 +345,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("ID nhập vào phải là kiểu số, xin hãy nhập lại");
-                stringcarID = scanner.nextLine();
+                stringcarID = new Scanner(System.in).nextLine();
                 continue;
             }
         }
@@ -358,7 +358,7 @@ public class OrderController {
                 break;
             } catch (Exception e) {
                 System.out.println("Số lượng nhập vào phải là kiểu số, xin hãy nhập lại");
-                quantity = scanner.nextLine();
+                quantity = new Scanner(System.in).nextLine();
                 continue;
             }
         }
